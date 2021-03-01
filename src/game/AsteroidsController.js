@@ -17,6 +17,7 @@ const BASE_ASTEROID_VELOCITY = 10;
 const MAX_ASTEROID_CLASS_VALUE = 3; // higher = smaller
 const BASE_SPAWN_THRESHOLD = 7;
 const SPAWN_THRESHOLD_SCALAR = 0.1;
+const EXPL_ASTEROID_ANGLE_OFFSET = 25;
 
 /**
  * Controls spawning asteroids & making game fun
@@ -82,23 +83,43 @@ export default class AsteroidsController {
    * increases killedCount and spawns new asteroids
    * @param {Entity} entity
    * @param {number} asteroidClass level/size of the asteroid (1 - 3), lower - larger
+   * @param {number | undefined} colliderAngle
    */
-  killAsteroid(entity, asteroidClass) {
+  killAsteroid(entity, asteroidClass, colliderAngle) {
     this.killedCount++;
     this.aliveCount--;
 
-    for (
-      let i = asteroidClass - 1;
-      i <= MathUtils.randomInt(MAX_ASTEROID_CLASS_VALUE - asteroidClass, 3);
-      i++
-    ) {
-      console.log('spawning with', asteroidClass - 1);
+    const toSpawnCount = MathUtils.randomInt(
+      MAX_ASTEROID_CLASS_VALUE - asteroidClass,
+      3
+    );
+
+    // to make asteroids spawn with fancy direction
+    let offset =
+      -EXPL_ASTEROID_ANGLE_OFFSET * ((toSpawnCount - asteroidClass - 1) / 2);
+
+    for (let i = asteroidClass - 1; i <= toSpawnCount; i++) {
+      let externalVelocity;
+      if (colliderAngle) {
+        externalVelocity = new vec2(
+          Math.cos((colliderAngle - 90 - offset) * MathUtils.DEG_TO_RAD) *
+            BASE_ASTEROID_VELOCITY *
+            (asteroidClass + 1),
+          Math.sin((colliderAngle - 90 - offset) * MathUtils.DEG_TO_RAD) *
+            BASE_ASTEROID_VELOCITY *
+            (asteroidClass + 1)
+        );
+      }
+
+      offset += EXPL_ASTEROID_ANGLE_OFFSET;
+
       this.spawnAsteroid(
         new vec2(
           entity.position.x + Math.random(),
           entity.position.y + Math.random()
         ),
-        asteroidClass + 1
+        asteroidClass + 1,
+        externalVelocity === undefined ? undefined : externalVelocity
       );
     }
     this.container.remove(entity);

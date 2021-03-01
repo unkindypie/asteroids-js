@@ -54,7 +54,7 @@ export default class PlayerDynamicsComponent extends DynamicsComponent {
       this.angularVelocity = 0;
     }
 
-    entity.rotation += this.angularVelocity * delta;
+    entity.rotation = (entity.rotation + this.angularVelocity * delta) % 360;
 
     // movement
 

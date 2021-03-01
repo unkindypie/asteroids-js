@@ -22,6 +22,7 @@ var SOURCE_PATH = './src';
 var STATIC_PATH = './static';
 var ENTRY_FILE = SOURCE_PATH + '/index.js';
 var OUTPUT_FILE = 'game.js';
+const isProd = process.env.NODE_ENV === 'production';
 
 var keepFiles = false;
 
@@ -169,4 +170,8 @@ gulp.task('watch-static', gulp.series('copyPhaser', reloadGulp));
  * Read more about task dependencies in Gulp:
  * https://medium.com/@dave_lunny/task-dependencies-in-gulp-b885c1ab48f0
  */
-gulp.task('default', gulp.series('serve'));
+if (isProd) {
+  gulp.task('default', gulp.series('build'));
+} else {
+  gulp.task('default', gulp.series('serve'));
+}

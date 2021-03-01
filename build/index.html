@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+
+  <body>
+    <div id="content">
+      <div class="ui">
+        <div class="ui__StarMenu" id="startScreen">
+          <button id="startGameBtn">PLAY</button>
+        </div>
+        <div class="ui__InGame" id="inGameScreen">
+          <span id="inGameScore">SCORE: 0</span>
+        </div>
+        <div class="ui__GameOverMenu" id="gameOverScreen">
+          <span class="ui__GameOverMenu_score" id="finalScore">YOUR SCORE</span>
+          <button id="replayGameBtn">PLAY AGAIN</button>
+        </div>
+      </div>
+      <canvas id="canvas"></canvas>
+    </div>
+    <script src="scripts/game.js"></script>
+  </body>
+</html>

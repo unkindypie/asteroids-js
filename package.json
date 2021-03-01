@@ -5,9 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "gulp",
-    "build:prod": "NODE_ENV=production gulp --production",
-    "start": "node server/server.js",
-    "heroku-postbuild": "npm run build:prod"
+    "build": "NODE_ENV=production gulp --production",
+    "start": "node server/server.js"
   },
   "author": "",
   "license": "",

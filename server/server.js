@@ -6,7 +6,6 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, '../build')));
 
-//т.к. я использую browser-routing, то мне необходимо отправлять один и тот же документ на все запросы
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });

@@ -90,7 +90,8 @@ export default class Game {
         this.inGameScreen.style.display = 'none';
         this.gameOverScreen.style.display = 'flex';
 
-        this.finalScore.textContent = `YOUR SCORE: ${this.score}`;
+        const flushedScore = this.score;
+        this.finalScore.textContent = `YOUR SCORE: ${flushedScore}`;
         this.score = 0;
         this.entityContainer.remove(this.player);
       }

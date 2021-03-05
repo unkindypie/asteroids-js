@@ -15,8 +15,7 @@ const asteroidVertexes = [
   [-4, 10],
   [-10, 4],
   [-10, -4],
-  [-10, -4],
-  [-4, -10],
+  // [-4, -10],
 ];
 
 export default class AsteroidRenderComponent extends RenderComponent {
@@ -29,7 +28,20 @@ export default class AsteroidRenderComponent extends RenderComponent {
   constructor(ctx, toWorldTransform, scale = 1) {
     super(ctx);
     this.transform = new Transform(new vec2(0, 0), new vec2(1, 1));
-    this.path = new RenderPath(asteroidVertexes, false);
+
+    const transformedVertexes = [];
+    for (let i = 0; i < asteroidVertexes.length; i++) {
+      const delta = new vec2(asteroidVertexes[i][0], asteroidVertexes[i][1])
+        .normalized;
+
+      transformedVertexes[i] = [];
+      transformedVertexes[i][0] =
+        asteroidVertexes[i][0] - delta.x * MathUtils.randomNumber(-1, 1);
+      transformedVertexes[i][1] =
+        asteroidVertexes[i][1] - delta.y * MathUtils.randomNumber(-1, 1);
+    }
+
+    this.path = new RenderPath(transformedVertexes, true);
     this.scale = scale;
     this.toWorldTransform = toWorldTransform;
   }
